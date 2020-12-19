@@ -25,7 +25,7 @@ let Dash = () => {
 
                     {user.user_metadata.full_name}
                 </NavLink>)}
-            <Button sx={{marginLeft:'700px', marginTop: 2, width: '20', }} onClick={() => netlifyIdentity.open(false)}>Logout</Button>
+            <Button sx={{marginLeft:'700px', marginTop: 2, width: '20', }} onClick={() => netlifyIdentity.open(false)}>Logout {user && user.user_metadata.full_name}</Button>
             </Flex>
             <Heading sx={{ marginTop: 5 }}>Login from DashBoard</Heading>
 
