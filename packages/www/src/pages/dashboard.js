@@ -1,6 +1,7 @@
 import React, { useContext, useReducer, useRef } from 'react'
 import { Link } from '@reach/router'
-import { Heading, Button, Flex, NavLink, Container, Label, Input, Checkbox } from 'theme-ui'
+import { Button, Flex, NavLink, Container, Label, Input, Checkbox } from 'theme-ui'
+import { gql, useMutation, useQuery } from 'apollo-client'
 import { IdentityContext } from '../../netlfyContext'
 
 
