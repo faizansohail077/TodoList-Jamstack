@@ -1,34 +1,30 @@
-// const React = require('react')
-// const useState = require('react')
-// const  useEffect  = require('react')
+const React = require('react')
+const netlifyIdentity = require('netlify-identity-widget')
 
 
-// const netlifyIdentity = require('netlify-identity-widget')
+const IdentityContext = React.createContext({})
+exports.IdentityContext = IdentityContext
 
-// const IdentityContext = React.createContext({})
+const Identityprovider = props => {
+    const [user, setUser] = React.useState('');
+    React.useEffect(() => {
+        netlifyIdentity.init({})
+    });
 
-// exports.IdentityContext = IdentityContext
+    netlifyIdentity.on('login', user1 => {
+        netlifyIdentity.close();
+        setUser(user1)
+    })
 
-// const provider = props => {
-//     const [user, setUser] = useState('');
-//     useEffect(() => {
-//         netlifyIdentity.init({})
-//     });
+    netlifyIdentity.on('logout', () => {
+        netlifyIdentity.close();
+        setUser()
+    })
 
-//     netlifyIdentity.on('login', user1 => {
-//         netlifyIdentity.close();
-//         setUser(user1)
-//     })
-
-//     netlifyIdentity.on('logout', () => {
-//         netlifyIdentity.close();
-//         setUser()
-//     })
-
-//     return (
-//         <IdentityContext.Provider value={{ identity: netlifyIdentity, user: undefined }}>
-//             {props.children}
-//         </IdentityContext.Provider>
-//     )
-// }
-// exports.Provider = provider
+    return (
+        <IdentityContext.Provider value={{ identity: netlifyIdentity, user }}>
+            {props.children}
+        </IdentityContext.Provider>
+    )
+}
+exports.Provider = Identityprovider
