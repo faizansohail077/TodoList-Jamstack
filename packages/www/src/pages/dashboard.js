@@ -41,6 +41,8 @@ const todosReducer = (state, action) => {
                 value: state[action.payload].value
             };
             return newState;
+            default:
+                return state
     }
 };
 
@@ -48,11 +50,11 @@ const todosReducer = (state, action) => {
 
 function Dashboard() {
     const { user, identity: netlifyIdentity } = useContext(IdentityContext)
-    const [todos, dispatch] = useReducer(todosReducer, []);
+    const [todos] = useReducer(todosReducer, []);
     const inputRef = useRef()
     const [addTodo] = useMutation(ADD_TODO)
     const [updateTodoDone] = useMutation(UPDATE_TODO_DONE)
-    const {loading,data,error} = useQuery(GET_TODOS)
+    const {loading,data,error,refetch} = useQuery(GET_TODOS)
     console.log('this is user', user)
 
     return (
@@ -74,12 +76,11 @@ function Dashboard() {
                     </NavLink>)}
 
                 </Flex>
-                <Flex as="form" onSubmit={e => {
+                <Flex as="form" onSubmit={async e => {
                     e.preventDefault();
-                    addTodo({variables:{text:inputRef.current.value }})
-
-                    inputRef.current.value = ""
-
+                    await  addTodo({variables:{text:inputRef.current.value }})
+                  inputRef.current.value = ""
+                   await refetch()
                 }}>
                     <Label sx={{ display: "flex" }}>
                         <span>Add : Todo</span>
@@ -94,7 +95,7 @@ function Dashboard() {
                 {error ? <div>{error.message} </div>: null}
                 {!loading  && !error && (
                     <ul sx={{ listStyleType: "none" }}>
-                        {todos.map(todo => (
+                        {data.todos.map(todo => (
                             <Flex
                                 key={todo.id}
                                 as="li"
