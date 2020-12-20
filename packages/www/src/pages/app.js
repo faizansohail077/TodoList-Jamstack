@@ -3,7 +3,7 @@ import {  Link, Router } from '@reach/router'
 import { Button} from 'theme-ui'
 
 import { IdentityContext } from '../../netlfyContext'
-import Dashboard from './dashboard'
+import Dashboard from '../component/dashboard'
 
 
 
