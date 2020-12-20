@@ -26,7 +26,7 @@ const resolvers = {
                 return []
             } else {
                 const results = await client.query(
-                    q.Paginate(q.Match(q.Index("todos_by_user"), "user_test"))
+                    q.Paginate(q.Match(q.Index("todos_by_user"), user))
                 )
                 return results.data.map(([ref, text, done]) => ({
                     id: ref.id,
@@ -35,7 +35,7 @@ const resolvers = {
                 }))
             }
         },
-        Mutauion: {
+        Mutation: {
             addTodo: async (_, { text }, { user }) => {
                 if (!user) {
                     return []
@@ -57,7 +57,7 @@ const resolvers = {
 
                 }
             },
-            updateTodoDone: async (_, { id }) => {
+            updateTodoDone: async (_, { id },{user}) => {
                 if(!user){
                     throw new Error("Must have a user")
                 }
@@ -103,6 +103,3 @@ exports.handler = server.createHandler({
 })
 
 
-// todoIndex++;
-// const id = `key-${todoIndex}`;
-// todos[id] = { id, text, done: false }
