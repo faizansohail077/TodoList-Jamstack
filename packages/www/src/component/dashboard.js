@@ -5,8 +5,8 @@ import { gql, useMutation, useQuery } from '@apollo/client'
 import { IdentityContext } from '../../netlfyContext'
 
 const ADD_TODO = gql`
-    mutation AddTodo($type: String!){
-        addTodo(text: $type){
+    mutation AddTodo($text: String!){
+        addTodo(text: $text){
             id
         }
     }
