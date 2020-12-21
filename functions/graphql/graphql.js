@@ -35,46 +35,47 @@ const resolvers = {
                 }))
             }
         },
-        Mutation: {
-            addTodo: async (_, { text }, { user }) => {
-                if (!user) {
-                    return []
-                } else {
-                    const results = await client.query(
-                        q.Create(q.Collection("todos"), {
-                            data: {
-                                text,
-                                done: false,
-                                owner: user
-                            }
-                        })
-                    );
-                    return {
-                        ...results.data,
-                        id: results.ref.id
-                    }
-
-
-                }
-            },
-            updateTodoDone: async (_, { id },{user}) => {
-                if(!user){
-                    throw new Error("Must have a user")
-                }
+        
+    },
+    Mutation: {
+        addTodo: async (_, { text }, { user }) => {
+            if (!user) {
+                return []
+            } else {
                 const results = await client.query(
-                    q.Update(q.Ref(q.Collection("todos"), id), {
+                    q.Create(q.Collection("todos"), {
                         data: {
-                            done: true
+                            text,
+                            done: false,
+                            owner: user
                         }
                     })
-                )
-
+                );
                 return {
                     ...results.data,
                     id: results.ref.id
                 }
 
+
             }
+        },
+        updateTodoDone: async (_, { id },{user}) => {
+            if(!user){
+                throw new Error("Must have a user")
+            }
+            const results = await client.query(
+                q.Update(q.Ref(q.Collection("todos"), id), {
+                    data: {
+                        done: true
+                    }
+                })
+            )
+
+            return {
+                ...results.data,
+                id: results.ref.id
+            }
+
         }
     }
 }
