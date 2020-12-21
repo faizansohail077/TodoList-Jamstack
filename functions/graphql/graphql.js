@@ -39,6 +39,7 @@ const resolvers = {
     },
     Mutation: {
         addTodo: async (_, { text }, { user }) => {
+            console.log('inside addTodo',text, user)
             if (!user) {
                 return []
             } else {
