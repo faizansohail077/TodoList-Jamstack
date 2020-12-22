@@ -6,7 +6,7 @@ import { IdentityContext } from '../../netlfyContext'
 
 const ADD_TODO = gql`
     mutation AddTodo($type: String!){
-        addTodo(text: "one todo"){
+        addTodo(text: $type){
             id
             
         }
