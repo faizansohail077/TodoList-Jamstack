@@ -8,7 +8,6 @@ const ADD_TODO = gql`
     mutation AddTodo($type: String!){
         addTodo(text: $type){
             id
-            
         }
     }
 `;
