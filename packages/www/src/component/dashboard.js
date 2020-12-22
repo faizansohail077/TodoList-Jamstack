@@ -104,7 +104,7 @@ function Dashboard() {
                                 }}
                             >
                                 <Checkbox checked={todo.done} />
-                                <span>{todo.value}</span>
+                                <span>{todo.text}</span>
                             </Flex>
                         ))}
                     </ul>)
